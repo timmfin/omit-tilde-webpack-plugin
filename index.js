@@ -29,7 +29,7 @@ OmitTildeWebpackPlugin.prototype.apply = function apply(compiler) {
   compiler.plugin('after-compile', afterCompile);
 
   if (moduleNames.length) {
-    compiler.resolvers.normal.plugin('directory', directoryResolver);
+    compiler.resolvers.normal.plugin('after-parsed-resolve', directoryResolver);
   } else {
     warn('No dependencies found, plugin will not run');
   }
@@ -106,7 +106,7 @@ OmitTildeWebpackPlugin.prototype.apply = function apply(compiler) {
         query  : candidate.query,
         module : true
       };
-      this.doResolve(['module'], amended, options.deprecate ? resolved : done);
+      this.doResolve('module', amended, null, options.deprecate ? resolved : done);
     }
     // ignore
     else {
